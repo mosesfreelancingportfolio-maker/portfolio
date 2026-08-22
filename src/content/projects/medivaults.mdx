@@ -1,0 +1,60 @@
+export const metadata = {
+  title: "Medivaults",
+  summary:
+    "A secure, encrypted platform for storing and sharing medical records, with appointment booking for patients, doctors, and hospitals.",
+  problem:
+    "Medical records were scattered, insecure, and hard to share between patients and providers, while booking appointments required phone calls and paperwork.",
+};
+
+## Overview
+
+Medivaults is a mobile and web application that provides a secure, encrypted platform for storing and sharing medical records. It helps users and patients book appointments with doctors and hospitals, while keeping sensitive health data protected.
+
+## The problem
+
+Medical records lived in paper files and disconnected systems. Sharing them between patients, doctors, and hospitals was slow and insecure, and booking appointments meant calls and outdated schedules. Patients had to little control over their own health data.
+
+## Goals
+
+- Store medical records securely with strong encryption
+- Let users share records with providers on demand
+- Enable patients to book appointments with doctors and hospitals
+- Build a calm, trustworthy experience around sensitive data
+
+## My solution
+
+- **Web + mobile clients** for patients and providers
+- **REST API** in the middle handling records and appointments
+- **Encrypted at rest and in transit** security model for health data
+- **Booking flow** connecting patients, doctors, and hospitals
+
+## Architecture
+
+- **Web**: Next.js dashboard for providers and hospitals
+- **Mobile**: React Native + Expo app for patients
+- **API**: REST services for sharing, auth, and booking
+- **Database**: PostgreSQL with row-level access for health data
+
+## Technologies
+
+- React Native / Expo
+- Next.js
+- Python
+- REST API
+- PostgreSQL
+
+## Implementation
+
+Medical records are stored securely and shared with explicit consent. Access is scoped per patient, while appointment booking is built as a shared scheduling model so availability is consistent across doctors and hospitals.
+
+## Focus areas
+
+- **Security**: encryption and strict access control as core, not an afterthought
+- **Consent**: patients stay in control of who sees their data
+- **Simplicity**: booking kept straightforward for non-technical users
+
+## Result
+
+A single, secure home for medical records with a working booking path between patients, doctors, and hospitals.
+
+> Case study in progress. Measures, client references, and final screenshots to be provided.
