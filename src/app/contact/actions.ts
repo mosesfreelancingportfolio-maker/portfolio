@@ -43,6 +43,14 @@ export async function submitContact(
   // Wire up BREVO_API_KEY + CONTACT_TO_EMAIL in production to send mail.
   if (!brevo || !process.env.CONTACT_TO_EMAIL) {
     console.log("Contact form received:", { data });
+    const missing = [
+      ...(brevo ? [] : ["BREVO_API_KEY"]),
+      ...(process.env.CONTACT_TO_EMAIL ? [] : ["CONTACT_TO_EMAIL"]),
+    ];
+    console.warn(
+      `Email delivery skipped — missing env vars: ${missing.join(", ")}. ` +
+        "Add them in Vercel → Settings → Environment Variables, then redeploy."
+    );
     return {
       status: "success",
       message: "Thanks for reaching out — I'll get back to you soon.",
