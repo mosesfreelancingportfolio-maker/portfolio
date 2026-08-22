@@ -27,30 +27,31 @@ const hankenGrotesk = Hanken_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Full-Stack Developer`,
+    default: `${siteConfig.name} — ${siteConfig.role}`,
     template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
   keywords: [
-    "full-stack developer",
     "web developer",
+    "mobile app developer",
     "Next.js developer",
     "React developer",
-    "mobile app developer",
-    "AI developer",
-    "software developer",
+    "React Native developer",
+    "API developer",
+    "PostgreSQL",
+    "Firebase",
   ],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — Full-Stack Developer`,
+    title: `${siteConfig.name} — ${siteConfig.role}`,
     description: siteConfig.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — Full-Stack Developer`,
+    title: `${siteConfig.name} — ${siteConfig.role}`,
     description: siteConfig.description,
   },
   robots: {

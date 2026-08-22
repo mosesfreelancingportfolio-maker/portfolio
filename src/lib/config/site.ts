@@ -4,7 +4,10 @@ export const siteConfig = {
   role: "Web & Mobile App Developer",
   description:
     "Computer science (software) engineering graduate and full-stack developer building web and mobile applications that solve real-world problems — specializing in web applications, mobile applications, backend & API development, and database management with PostgreSQL and Firebase.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
+    "http://localhost:3000",
   email: "hello@mosesjp.dev",
   location: "Namibia · Available worldwide",
   nav: [
