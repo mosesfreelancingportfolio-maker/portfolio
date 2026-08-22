@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Moses Joseph Benjamin
 
-## Getting Started
+Personal portfolio site built with Next.js (App Router), Tailwind CSS, and MDX case studies.
+Contact form delivers email through Brevo. Hosted on Vercel.
 
-First, run the development server:
+Live site: https://portfolio-<your-id>.vercel.app _(update after first deploy)_
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Daily workflow: pushing code through the pipeline
+
+You never run builds or deploys manually. The pipeline does everything:
+
+```
+git push ──► GitHub Actions (CI) ──► Vercel (CD)
+             lint + typecheck        auto-deploy to production
+             + production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Step by step
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**1. Make your changes**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Edit files locally as usual. To preview locally before pushing:
 
-## Learn More
+```bash
+npm run dev        # dev server at http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+**2. Commit your work**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+git add -A                          # stage all changes (or list specific files)
+git commit -m "Describe what changed"
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**3. Push — this triggers everything**
 
-## Deploy on Vercel
+```bash
+git push
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+That single command kicks off both stages automatically:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Stage | Where | What happens |
+|---|---|---|
+| CI | GitHub Actions | Installs deps, runs ESLint, runs a full production build (includes TypeScript checks) |
+| CD | Vercel | Deploys `main` to production; other branches get preview URLs |
+
+**4. Check status**
+
+- **CI**: Repo → **Actions** tab → latest run on your commit.
+  - ✅ green check = code is valid
+  - ❌ red X = something failed; open the run and click the failed step to see logs
+- **CD**: Your Vercel dashboard → project → Deployments tab.
+
+**5. If CI fails**
+
+Fix the issue locally, verify, then commit + push again:
+
+```bash
+npm run lint        # check what ESLint flags
+npm run build       # check what TypeScript/build flags
+```
+
+The same errors that appear in Actions will reproduce locally.
+
+---
+
+## One-time setup (already done)
+
+- Remote: `origin` → `github.com/mosesfreelancingportfolio-maker/portfolio`
+- Branch: `main` (default)
+- CI workflow: `.github/workflows/ci.yml`
+- Env vars configured in Vercel project settings:
+  - `BREVO_API_KEY` — transactional email API key
+  - `CONTACT_TO_EMAIL` — inbox that receives form submissions
+  - `CONTACT_FROM_EMAIL` — verified sender address
+  - `NEXT_PUBLIC_SITE_URL` — canonical site URL (optional; falls back to the Vercel domain)
+
+## Local development setup (new machine)
+
+```bash
+git clone https://github.com/mosesfreelancingportfolio-maker/portfolio.git
+cd portfolio
+npm install
+cp .env.example .env        # then fill in your values
+npm run dev
+```
+
+`.env` is gitignored — never commit it.
+
+## Scripts
+
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build (runs TypeScript checks) |
+| `npm start` | Serve the production build |
+| `npm run lint` | Run ESLint |
+
+## Adding content
+
+- **Projects**: edit `src/data/projects.ts`, add a case study at `src/content/projects/<slug>.mdx`, and drop a screenshot into `public/projects/`.
+- **Services / skills**: edit `src/data/services.ts` and `src/data/skills.ts`.
+- **Identity, links, contact info**: edit `src/lib/config/site.ts`.
