@@ -3,6 +3,7 @@
 import { BrevoClient } from "@getbrevo/brevo";
 
 import { contactFormSchema, type ContactFormData } from "@/lib/validations/contact";
+import { siteConfig } from "@/lib/config/site";
 
 export type ContactState =
   | { status: "idle" }
@@ -61,7 +62,7 @@ export async function submitContact(
     await brevo.transactionalEmails.sendTransacEmail({
       sender: {
         email: process.env.CONTACT_FROM_EMAIL || "hello@mosesjp.dev",
-        name: "Portfolio",
+        name: siteConfig.name,
       },
       to: [{ email: process.env.CONTACT_TO_EMAIL }],
       replyTo: { email: data.email },
