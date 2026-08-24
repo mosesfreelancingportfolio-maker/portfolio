@@ -8,7 +8,7 @@ export const siteConfig = {
     process.env.NEXT_PUBLIC_SITE_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "") ||
     "http://localhost:3000",
-  email: "hello@mosesjp.dev",
+  email: "mosesfreelancingportfolio@gmail.com",
   location: "Namibia · Available worldwide",
   nav: [
     { title: "About", href: "/about" },

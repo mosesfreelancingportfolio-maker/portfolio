@@ -93,42 +93,6 @@ export default function RootLayout({
           <Toaster />
         </ThemeProvider>
         <Analytics />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              document.addEventListener("DOMContentLoaded", () => {
-                // Smooth scroll for anchor links
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                  anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                      target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                      });
-                    }
-                  });
-                });
-
-                // Reveal animations
-                const observer = new IntersectionObserver((entries, observer) => {
-                  entries.forEach(entry => {
-                    if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); }
-                  });
-                }, { root: null, rootMargin: '0px', threshold: 0.1 });
-                document.querySelectorAll('.reveal-up').forEach((el) => observer.observe(el));
-                
-                // Auto-resize textareas
-                const tx = document.getElementsByTagName("textarea");
-                for (let i = 0; i < tx.length; i++) {
-                  tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
-                  tx[i].addEventListener("input", function () { this.style.height = 0; this.style.height = (this.scrollHeight) + "px"; }, false);
-                }
-              });
-            `,
-          }}
-        />
       </body>
     </html>
   );

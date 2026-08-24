@@ -219,6 +219,11 @@ export function ContactForm() {
           aria-describedby={errors.projectDescription ? "projectDescription-error" : undefined}
           className="border-0 border-b border-border/50 bg-transparent px-0 py-4 font-sans text-base text-foreground placeholder-muted-foreground/50 focus:ring-0 focus:border-foreground resize-none"
           {...register("projectDescription")}
+          onInput={(event) => {
+            const textarea = event.currentTarget;
+            textarea.style.height = "0px";
+            textarea.style.height = `${textarea.scrollHeight}px`;
+          }}
         />
         <FieldError message={errors.projectDescription?.message} id="projectDescription-error" />
       </div>

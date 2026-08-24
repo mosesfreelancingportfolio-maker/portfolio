@@ -2,8 +2,11 @@
 
 import { BrevoClient } from "@getbrevo/brevo";
 
-import { contactFormSchema, type ContactFormData } from "@/lib/validations/contact";
 import { siteConfig } from "@/lib/config/site";
+import {
+  contactFormSchema,
+  type ContactFormData,
+} from "@/lib/validations/contact";
 
 export type ContactState =
   | { status: "idle" }
@@ -18,7 +21,6 @@ export async function submitContact(
   _prevState: ContactState,
   formData: FormData
 ): Promise<ContactState> {
-  // Honeypot: if filled, it's a bot. Silently succeed but discard.
   const honeypot = formData.get("website");
   if (typeof honeypot === "string" && honeypot.length > 0) {
     return { status: "success", message: "Thanks — I'll be in touch soon." };
@@ -40,17 +42,26 @@ export async function submitContact(
 
   const data = result.data as ContactFormData;
 
-  // Without a configured API key, return a graceful placeholder result.
-  // Wire up BREVO_API_KEY + CONTACT_TO_EMAIL in production to send mail.
   if (!brevo || !process.env.CONTACT_TO_EMAIL) {
-    console.log("Contact form received:", { data });
     const missing = [
       ...(brevo ? [] : ["BREVO_API_KEY"]),
       ...(process.env.CONTACT_TO_EMAIL ? [] : ["CONTACT_TO_EMAIL"]),
     ];
+
+    if (process.env.NODE_ENV === "production") {
+      console.error(
+        `Email delivery unavailable; missing env vars: ${missing.join(", ")}`
+      );
+      return {
+        status: "error",
+        message:
+          "Email delivery is temporarily unavailable. Please email me directly.",
+      };
+    }
+
+    console.log("Contact form received:", { data });
     console.warn(
-      `Email delivery skipped — missing env vars: ${missing.join(", ")}. ` +
-        "Add them in Vercel → Settings → Environment Variables, then redeploy."
+      `Email delivery skipped; missing env vars: ${missing.join(", ")}.`
     );
     return {
       status: "success",
@@ -61,7 +72,7 @@ export async function submitContact(
   try {
     await brevo.transactionalEmails.sendTransacEmail({
       sender: {
-        email: process.env.CONTACT_FROM_EMAIL || "hello@mosesjp.dev",
+        email: process.env.CONTACT_FROM_EMAIL || siteConfig.email,
         name: siteConfig.name,
       },
       to: [{ email: process.env.CONTACT_TO_EMAIL }],
