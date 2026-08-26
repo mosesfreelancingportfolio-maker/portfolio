@@ -34,6 +34,29 @@ export const projects: Project[] = [
     year: "2025",
   },
   {
+    slug: "sudagospel",
+    title: "SudaGospel",
+    description:
+      "A modern web and mobile application for streaming gospel music, with artist management, content publishing, and cross-platform mobile support.",
+    category: "Web · Mobile · Backend",
+    technologies: [
+      "React",
+      "Vite",
+      "TypeScript",
+      "Tailwind CSS",
+      "Shadcn UI",
+      "React Router",
+      "TanStack Query",
+      "Zod",
+      "React Hook Form",
+      "Supabase",
+      "Capacitor",
+    ],
+    image: "/projects/sudagospel.png",
+    featured: true,
+    year: "2025",
+  },
+  {
     slug: "pahukeni-hotel",
     title: "Pahukeni Pension Hotel Management System",
     description:

@@ -1,0 +1,75 @@
+export const metadata = {
+  title: "SudaGospel",
+  summary:
+    "A modern web and mobile application for streaming gospel music, with artist management, content publishing, and cross-platform mobile support via Capacitor.",
+  problem:
+    "Gospel music platforms lacked a unified experience for streaming, artist engagement, and content discovery across web and mobile, with fragmented tools for artists to manage their presence.",
+};
+
+## Overview
+
+SudaGospel is a comprehensive platform for gospel music streaming and artist engagement. Built as a unified web and mobile application, it provides music playback, artist profiles and dashboards, content management for news and playlists, and cross-platform mobile support through Capacitor.
+
+## The problem
+
+Gospel music audiences and creators were underserved by existing platforms. Artists lacked dedicated tools to manage their profiles, publish music, and engage with listeners. Listeners had no centralized place to discover gospel music, follow artists, and access related content like news and playlists. Existing solutions were either web-only, mobile-only, or lacked the content management features needed for a rich music ecosystem.
+
+## Goals
+
+- Build a unified music streaming platform for web and mobile
+- Provide artists with self-service dashboards for profiles and content
+- Enable content management for news, blogs, playlists, and albums
+- Deliver cross-platform mobile apps from a single codebase
+- Implement secure authentication and content moderation
+- Support theming (dark/light mode) for user preference
+
+## My role
+
+Full-stack development: architecture, database design, API design, web client, mobile build pipeline, and deployment.
+
+## Solution
+
+A React + Vite + TypeScript application with a Supabase backend, deployed as a web app and packaged for iOS/Android via Capacitor. The frontend uses modern tooling for performance and developer experience, while Supabase provides authentication, database, and real-time capabilities.
+
+## Architecture
+
+- **Frontend**: React + Vite + TypeScript + Tailwind CSS
+- **UI Components**: Shadcn UI (Radix UI primitives + Tailwind)
+- **Routing**: React Router v6
+- **State Management**: TanStack Query (server state) + React Hook Form + Zod (forms/validation)
+- **Backend**: Supabase (PostgreSQL, Auth, Realtime, Storage)
+- **Mobile**: Capacitor (iOS + Android builds from single codebase)
+- **Theming**: CSS variables + Tailwind dark mode class strategy
+
+Flow: User authenticates via Supabase Auth → TanStack Query manages server state with optimistic updates → Capacitor wraps web build for native mobile distribution.
+
+## Technologies
+
+- React 18 + Vite + TypeScript
+- Tailwind CSS + Shadcn UI
+- React Router v6
+- TanStack Query v5
+- React Hook Form + Zod
+- Supabase (Auth, PostgreSQL, Realtime, Storage)
+- Capacitor (iOS / Android)
+
+## Implementation
+
+Designed a normalized PostgreSQL schema in Supabase for users, artists, tracks, albums, playlists, news articles, and user interactions (favorites, follows, play history). Row Level Security policies enforce data access rules. Supabase Auth handles email/password and OAuth providers with email verification and password reset flows.
+
+The web client uses TanStack Query for server state with optimistic mutations for instant UI feedback. Forms use React Hook Form + Zod for validation with accessible error states via Shadcn UI components. Dark/light theming uses CSS custom properties with a class-based strategy synced to localStorage and system preference.
+
+Capacitor configuration produces iOS (Xcode) and Android (Gradle) projects from the built web assets, with native plugins for deep linking, push notifications, and background audio.
+
+## Challenges
+
+- **Background audio on mobile**: Web Audio API behaves differently in Capacitor webview vs native; solved with Capacitor Media Session plugin and native audio session configuration
+- **Real-time sync**: TanStack Query + Supabase Realtime required careful cache invalidation strategy to avoid stale data
+- **Cross-platform theming**: CSS variables + Tailwind dark mode required careful coordination between web and native webview rendering
+- **Supabase RLS policies**: Complex policies for artist/content ownership required iterative testing
+
+## Lessons learned
+
+Capacitor enables true single-codebase mobile deployment but requires attention to webview-specific behaviors (audio, keyboard, safe areas). TanStack Query's optimistic updates dramatically improve perceived performance for music interactions. Supabase's built-in Auth + RLS dramatically reduces backend boilerplate for multi-tenant content platforms.
+
+> Case study in progress. Screenshots and deployment metrics to be added.
