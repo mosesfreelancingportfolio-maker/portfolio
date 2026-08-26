@@ -7,8 +7,8 @@ export function SiteFooter() {
     <footer className="w-full border-t border-border bg-background">
       <div className="container-page flex flex-col md:flex-row justify-between items-start gap-8 py-section-gap">
         <div className="flex flex-col gap-4">
-          <div className="font-display text-2xl md:text-4xl text-foreground">
-            {siteConfig.shortName}
+          <div className="font-display text-xl md:text-2xl lg:text-3xl text-foreground">
+            {siteConfig.name}
           </div>
           <p className="font-sans text-sm text-muted-foreground">
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.

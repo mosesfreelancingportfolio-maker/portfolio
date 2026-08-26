@@ -51,10 +51,10 @@ export function SiteHeader() {
       <div className="container-page flex h-20 items-center justify-between">
         <Link
           href="/"
-          className="font-display text-2xl md:text-4xl tracking-tighter text-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 rounded"
+          className="font-display text-xl md:text-2xl lg:text-3xl tracking-tighter text-foreground focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 rounded"
           aria-label="Home"
         >
-          {siteConfig.shortName}
+          {siteConfig.name}
         </Link>
 
         {/* Desktop nav */}
