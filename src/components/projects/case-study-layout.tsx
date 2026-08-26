@@ -56,19 +56,6 @@ export function CaseStudyLayout({
         </Reveal>
       ) : null}
 
-      <Reveal delay={0.05}>
-        <div className="mt-8 flex flex-wrap gap-2">
-          {project.technologies.map((tech) => (
-            <span
-              key={tech}
-              className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </Reveal>
-
       <div
         className={cn(
           "prose prose-neutral mt-14 max-w-3xl",

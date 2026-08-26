@@ -50,17 +50,6 @@ export function ProjectCard({ project }: { project: Project }) {
             aria-hidden="true"
           />
         </div>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          {project.technologies.map((tech) => (
-            <span
-              key={tech}
-              className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
       </div>
     </Link>
   );
