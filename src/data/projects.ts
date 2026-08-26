@@ -57,6 +57,25 @@ export const projects: Project[] = [
     year: "2025",
   },
   {
+    slug: "nexusedu",
+    title: "NexusEdu — School Management System",
+    description:
+      "A multi-tenant SaaS platform for school administration with role-based access, real-time data isolation, and super-admin oversight.",
+    category: "Web · Backend · SaaS",
+    technologies: [
+      "Cloudflare Workers",
+      "Node.js",
+      "Express",
+      "TypeScript",
+      "PostgreSQL",
+      "Drizzle ORM",
+      "Supabase Auth",
+    ],
+    image: "/projects/nexusedu.png",
+    featured: true,
+    year: "2025",
+  },
+  {
     slug: "pahukeni-hotel",
     title: "Pahukeni Pension Hotel Management System",
     description:

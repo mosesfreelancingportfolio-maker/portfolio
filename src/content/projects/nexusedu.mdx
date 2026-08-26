@@ -1,0 +1,84 @@
+export const metadata = {
+  title: "NexusEdu — School Management System",
+  summary:
+    "A multi-tenant SaaS platform for school administration with role-based access, real-time data isolation, and super-admin oversight.",
+  problem:
+    "Schools needed a modern, cloud-native management system that could serve multiple independent schools on a single deployment while ensuring complete data isolation, role-based access control, and super-admin oversight — all without the complexity of managing separate infrastructure per school.",
+};
+
+## Overview
+
+NexusEdu is a full-stack, multi-tenant school management system built for **Cloudflare Workers** (frontend) and **Node.js/Express** (backend) with **PostgreSQL** (via Drizzle ORM) and **Supabase Auth**. It supports multiple independent schools on a single deployment, each with complete data isolation, while a **Super Admin** role can view and manage everything across all schools.
+
+**Live Demo**: https://nexusedu-sms.pages.dev
+
+## The problem
+
+Schools needed a modern, cloud-native management system that could serve multiple independent schools on a single deployment. Key challenges:
+
+- **Data isolation**: Each school's data (students, staff, grades, fees, etc.) must be completely isolated from other schools
+- **Role-based access**: Different user roles (Super Admin, School Admin, Teacher, Student, Parent) need different permissions
+- **Super-admin oversight**: A global admin must oversee all schools without compromising isolation
+- **Cost efficiency**: Running separate infrastructure per school is prohibitively expensive
+- **Scalability**: System must handle varying loads across schools without cross-tenant noise
+
+## My solution
+
+A multi-tenant architecture with **schema-based isolation** in PostgreSQL, where each school gets its own schema. The Super Admin operates in a special "global" schema with cross-schema query capabilities. The frontend runs on Cloudflare Workers for edge performance, while the backend API runs on Node.js/Express with Drizzle ORM for type-safe database operations.
+
+## Architecture
+
+- **Frontend**: Cloudflare Workers + Hono/React (deployed to Cloudflare Pages)
+- **Backend API**: Node.js + Express + TypeScript
+- **Database**: PostgreSQL (Neon/Supabase) with **schema-per-tenant** isolation
+- **ORM**: Drizzle ORM (type-safe, schema-aware)
+- **Auth**: Supabase Auth (JWT-based, row-level security via claims)
+- **Deployment**: Cloudflare Pages (frontend) + Railway/Render (backend)
+
+### Multi-tenant Strategy
+
+```
+public (shared)          school_a            school_b            school_c
+├── users                ├── students        ├── students        ├── students
+├── schools              ├── staff           ├── staff           ├── staff
+├── roles                ├── grades          ├── grades          ├── grades
+├── permissions          ├── fees            ├── fees            ├── fees
+                         ├── attendance      ├── attendance      ├── attendance
+```
+
+- **Super Admin** operates in `public` schema with `GRANT USAGE` on all school schemas
+- Each school's users only see their own schema via `search_path` manipulation
+- Row Level Security (RLS) as additional defense layer
+
+## Features
+
+- **Multi-tenancy**: Schema-based isolation, zero data leakage between schools
+- **Role-based access**: Super Admin, School Admin, Teacher, Student, Parent
+- **Real-time isolation**: Each school's data queries scoped to their schema
+- **Super-admin dashboard**: Cross-school analytics, provisioning, monitoring
+- **School admin tools**: Student/staff management, grading, fee collection, attendance
+- **Teacher portal**: Grade entry, attendance marking, class management
+- **Student/Parent portal**: Grade viewing, fee payment, announcements
+
+## Technologies
+
+- **Frontend**: Cloudflare Workers, React, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express, TypeScript
+- **Database**: PostgreSQL (Neon), Drizzle ORM
+- **Auth**: Supabase Auth (JWT, RLS)
+- **Deployment**: Cloudflare Pages (frontend), Railway (backend)
+- **Tooling**: pnpm workspaces, TypeScript, Vitest, ESLint
+
+## Challenges
+
+- **Schema management**: Dynamic schema creation/migration per school required custom migration runner
+- **Connection pooling**: Shared pool with `SET search_path` per request; solved with middleware
+- **Auth claims**: Custom JWT claims (`school_id`, `role`) injected via Supabase hooks for RLS
+- **Cross-schema queries**: Super admin queries required `UNION ALL` across schemas with dynamic SQL
+- **Migration safety**: Automated per-schema migrations with rollback capability
+
+## Lessons learned
+
+Schema-per-tenant is powerful for strict isolation but adds operational complexity (migrations, backups). Cloudflare Workers + Hono is excellent for edge-first frontends with zero cold starts. Supabase Auth + custom JWT claims + PostgreSQL RLS provides a surprisingly clean auth/authorization stack for multi-tenant apps.
+
+> Live at https://nexusedu-sms.pages.dev. Screenshots and detailed metrics to be added.
