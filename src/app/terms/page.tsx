@@ -162,11 +162,11 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold tracking-tight mb-4">10. Governing Law & Dispute Resolution</h2>
             <p className="mb-4">
-              These Terms shall be governed by and construed in accordance with the laws of <strong>Namibia</strong>, without regard to conflict of law principles. Any dispute arising from these Terms or your use of the website shall be resolved through:
+              These Terms shall be governed by and construed in accordance with the laws of <strong>South Sudan</strong>, without regard to conflict of law principles. Any dispute arising from these Terms or your use of the website shall be resolved through:
             </p>
             <ul className="list-disc space-y-2 pl-5 mb-4">
               <li>Good-faith negotiation between parties</li>
-              <li>If unresolved, binding arbitration in Windhoek, Namibia</li>
+              <li>If unresolved, binding arbitration in Juba, South Sudan</li>
               <li>Each party bears its own costs unless otherwise awarded</li>
             </ul>
           </section>
