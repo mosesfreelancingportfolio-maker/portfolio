@@ -31,6 +31,12 @@ export function SiteFooter() {
           >
             Privacy
           </Link>
+          <Link
+            href="/terms"
+            className="font-sans text-sm text-muted-foreground hover:text-secondary transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 rounded"
+          >
+            Terms
+          </Link>
         </div>
         
         <div className="flex gap-8">
